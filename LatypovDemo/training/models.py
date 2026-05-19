@@ -37,9 +37,9 @@ class EnrollmentRequest(models.Model):
         FINISHED = 'finished', 'Обучение завершено'
 
     class PayType(models.TextChoices):
-        CARD = 'card', 'Банковская карта'
-        TRANSFER = 'transfer', 'Банковский перевод'
-        INSTALLMENT = 'installment', 'Рассрочка'
+        CARD = 'card', 'Оплата картой МИР'
+        TRANSFER = 'transfer', 'Предоплата по QR-коду'
+        INSTALLMENT = 'installment', 'Постоплата в офисе организации'
 
     learner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='enrollment_requests')
     program = models.ForeignKey(Program, on_delete=models.PROTECT, related_name='requests')

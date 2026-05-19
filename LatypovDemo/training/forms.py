@@ -25,10 +25,8 @@ class SignupForm(forms.ModelForm):
 
     def clean_username(self):
         username = self.cleaned_data['username']
-        if len(username) < 4:
-            raise ValidationError('Логин должен содержать минимум 4 символа.')
-        if len(username) > 6:
-            raise ValidationError('Логин должен быть не длиннее 6 символов.')
+        if len(username) < 6:
+            raise ValidationError('Логин должен содержать минимум 6 символов.')
         if not re.fullmatch(r'[A-Za-z0-9]+', username):
             raise ValidationError('Допустимы только латинские буквы и цифры.')
         if User.objects.filter(username=username).exists():
