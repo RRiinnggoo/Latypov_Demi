@@ -1,0 +1,19 @@
+{% extends 'training/form_base.html' %}
+
+{% block title %}Новый курс | Учусь РФ{% endblock %}
+ 
+{% block form_content %}
+<p class="kicker">администратор</p>
+<h1>Новый курс</h1>
+<form method="post" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+        <label class="field">
+            <span>{{ field.label }}</span>
+            {{ field }}
+            {% for error in field.errors %}<small>{{ error }}</small>{% endfor %}
+        </label>
+    {% endfor %}
+    <button class="action action-primary action-wide btn" type="submit">Добавить курс</button>
+</form>
+{% endblock %}

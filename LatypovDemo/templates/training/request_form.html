@@ -1,0 +1,20 @@
+{% extends 'training/form_base.html' %}
+
+{% block title %}Новая заявка | Учусь РФ{% endblock %}
+
+{% block form_content %}
+<p class="kicker">формирование заявки</p>
+<h1>Новая заявка</h1>
+<form method="post" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+        <label class="field">
+            <span>{{ field.label }}</span>
+            {{ field }}
+            {% for error in field.errors %}<small>{{ error }}</small>{% endfor %}
+        </label>
+    {% endfor %}
+    <button class="action action-primary action-wide btn" type="submit">Отправить заявку</button>
+</form>
+{% endblock %}
+ 

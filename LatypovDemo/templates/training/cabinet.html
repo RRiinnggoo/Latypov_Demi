@@ -1,0 +1,21 @@
+{% extends 'training/base.html' %}
+
+{% block title %}Личный кабинет | Учусь РФ{% endblock %}
+ 
+{% block content %}
+<section class="dashboard">
+    <div>
+        <p class="kicker">личный кабинет</p>
+        <h1>Здравствуйте, {{ request.user.username }}</h1>
+        <p>Здесь собраны основные действия: новая заявка, история заявок и отзывы после завершения обучения.</p>
+        <div class="hero-actions">
+            <a class="action action-primary btn" href="{% url 'request_create' %}">Новая заявка</a>
+            <a class="action action-secondary btn" href="{% url 'request_list' %}">Просмотр заявок</a>
+        </div>
+    </div>
+    <aside class="metric">
+        <span>{{ total }}</span>
+        <strong>заявок создано</strong>
+    </aside>
+</section>
+{% endblock %}

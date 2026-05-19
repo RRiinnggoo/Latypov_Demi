@@ -1,0 +1,32 @@
+{% extends 'training/base.html' %}
+
+{% block title %}Главная | Учусь РФ{% endblock %}
+ 
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <p class="kicker">онлайн-обучение</p>
+        <h1>Учусь РФ</h1>
+        {% if request.user.is_staff %}
+            <p>Рабочее место администратора для проверки заявок, фильтрации обращений и смены статусов обучения.</p>
+        {% elif request.user.is_authenticated %}
+            <p>Выберите курс, отправьте заявку и отслеживайте обучение в личной истории. Отзыв откроется после завершения курса.</p>
+        {% else %}
+            <p>Портал для записи на курсы с понятной заявкой, статусами и отзывами после обучения.</p>
+        {% endif %}
+    </div>
+    <h1 style="text-align: center;">Мы работаем с большим количества клиентов по всему миру</h1>
+    {% include 'training/slider.html' %}
+    <div class="hero-actions">
+        {% if request.user.is_staff %}
+            <a class="action action-primary btn" href="{% url 'staff_panel' %}">Открыть панель</a>
+        {% elif request.user.is_authenticated %}
+            <a class="action action-primary btn" href="{% url 'request_list' %}">Просмотреть заявки</a>
+            <a class="action action-secondary btn" href="{% url 'request_create' %}">Оставить новую</a>
+        {% else %}
+            <a class="action action-primary btn" href="{% url 'signin' %}">Войти</a>
+            <a class="action action-secondary btn" href="{% url 'signup' %}">Создать аккаунт</a>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

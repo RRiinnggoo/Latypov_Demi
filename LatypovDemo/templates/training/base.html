@@ -1,0 +1,62 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head> 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Учусь РФ{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'training/css/interface.css' %}">
+</head>
+<body>
+    <header class="topbar">
+        <nav class="shell topbar-inner">
+            <a class="mark" href="{% url 'home' %}">
+                <img class="mark-logo" src="{% static 'logo.png' %}" alt="Учусь РФ" onerror="this.onerror=null;this.src='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';this.classList.add('logo-empty')">
+                <span>Курсы</span>
+            </a>
+            <div class="top-actions">
+                {% if request.user.is_authenticated %}
+                    {% if request.user.is_staff %}
+                        <a class="nav-pill btn" href="{% url 'staff_panel' %}">Панель</a>
+                    {% else %}
+                        <a class="nav-pill btn" href="{% url 'request_list' %}">Заявки</a>
+                        <a class="nav-pill btn" href="{% url 'request_create' %}">Новая</a>
+                    {% endif %}
+                    <form method="post" action="{% url 'signout' %}">
+                        {% csrf_token %}
+                        <button class="nav-pill nav-pill-light btn" type="submit">Выйти</button>
+                    </form>
+                {% else %}
+                    <a class="nav-pill btn" href="{% url 'signin' %}">Вход</a>
+                    <a class="nav-pill nav-pill-light btn" href="{% url 'signup' %}">Регистрация</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main class="shell page">
+        {% if messages %}
+            <section class="message-stack">
+                {% for message in messages %}
+                    <div class="notice notice-{{ message.tags|default:'info' }}">{{ message }}</div>
+                {% endfor %}
+            </section>
+        {% endif %}
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <div class="shell footer-inner">
+            <strong>Учусь РФ</strong>
+            <span>Информационная система записи на курсы повышения квалификации</span>
+        </div>
+    </footer>
+
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'training/js/slider.js' %}"></script>
+</body>
+</html>

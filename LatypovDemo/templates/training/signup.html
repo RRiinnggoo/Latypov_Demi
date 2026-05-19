@@ -1,0 +1,22 @@
+{% extends 'training/form_base.html' %}
+
+{% block title %}Регистрация | Учусь РФ{% endblock %}
+ 
+{% block form_content %}
+<p class="kicker">новый аккаунт</p>
+<h1>Регистрация</h1>
+<form method="post" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+        <label class="field">
+            <span>{{ field.label }}</span>
+            {{ field }}
+            {% if field.name == 'username' %}<em>Латинские буквы и цифры, максимум 6 символов.</em>{% endif %}
+            {% if field.name == 'password' %}<em>Минимум 8 символов.</em>{% endif %}
+            {% for error in field.errors %}<small>{{ error }}</small>{% endfor %}
+        </label>
+    {% endfor %}
+    <button class="action action-primary action-wide btn" type="submit">Зарегистрироваться</button>
+</form>
+<a class="text-link" href="{% url 'signin' %}">Уже есть аккаунт?</a>
+{% endblock %}

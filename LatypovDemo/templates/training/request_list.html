@@ -1,0 +1,35 @@
+{% extends 'training/base.html' %}
+
+{% block title %}Просмотр заявок | Учусь РФ{% endblock %}
+ 
+{% block content %}
+<section class="panel">
+    <div class="panel-title">
+        <div>
+            <p class="kicker">заявки</p>
+            <h1>История заявок</h1>
+        </div>
+        <a class="action action-primary btn" href="{% url 'request_create' %}">Новая</a>
+    </div>
+    <div class="request-stack">
+        {% for item in requests %}
+            <article class="request-card">
+                <div>
+                    <h2>{{ item.program.name }}</h2>
+                    <p>{{ item.preferred_start|date:'d.m.Y' }} · {{ item.get_payment_display }}</p>
+                </div>
+                <div class="request-side">
+                    <span class="badge-state badge-{{ item.state }}">{{ item.get_state_display }}</span>
+                    {% if item.review_allowed and not item.service_review %}
+                        <a class="mini-link" href="{% url 'review_create' item.id %}">Оставить отзыв</a>
+                    {% elif item.service_review %}
+                        <span class="review-done">Отзыв оставлен</span>
+                    {% endif %}
+                </div>
+            </article>
+        {% empty %}
+            <p class="empty">Заявок пока нет.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}
